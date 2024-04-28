@@ -26,10 +26,13 @@ public class TaskModel {
     private String priority;
     private UUID idUser;
 
+    // Anotação para indicar que o campo é preenchido automaticamente com a data e hora de criação
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    // Método setter personalizado para o título da tarefa
     public void setTitle(String title) throws Exception{
+        // Verifica se o título excede o comprimento máximo permitido
         if(title.length() > 50){
             throw new Exception("O campo title deve conter no máximo 50 caracteres!");
         }

@@ -17,18 +17,22 @@ public class UserController {
     @Autowired
     private IUserRepository userRepository;
 
+    // Endpoint para criar um novo usuário
     @PostMapping("/")
     public ResponseEntity create(@RequestBody UserModel userModel){
+        // Verifica se o usuário já existe no banco de dados
         var user = this.userRepository.findByUsername(userModel.getUsername());
 
         if(user != null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe");
         }
 
+        // Hash da senha do usuário usando BCrypt
         var passwordHashed = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
 
         userModel.setPassword(passwordHashed);
 
+        // Salva o usuário no banco de dados
         var userCreated = this.userRepository.save(userModel);
         return ResponseEntity.status(HttpStatus.OK).body(userCreated);
 

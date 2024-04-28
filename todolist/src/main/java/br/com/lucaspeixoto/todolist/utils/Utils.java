@@ -10,10 +10,12 @@ import org.springframework.beans.BeanWrapperImpl;
 
 public class Utils {
 
+    // Método para copiar propriedades não nulas de um objeto de origem para um objeto de destino
     public static void copyNonNullProperties(Object source, Object target){
         BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
     }
 
+    // Método para obter nomes de propriedades nulas de um objeto
     public static String[] getNullPropertyNames (Object source){
         final BeanWrapper src = new BeanWrapperImpl(source);
 
